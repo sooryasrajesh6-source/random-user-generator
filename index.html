@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Random User Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      width: 300px;
+      text-align: center;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+
+    img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin-bottom: 15px;
+    }
+
+    h2 {
+      margin: 10px 0;
+    }
+
+    p {
+      color: #555;
+      margin: 6px 0;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 18px;
+      border: none;
+      background: #007bff;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <img id="photo" src="https://randomuser.me/api/portraits/men/1.jpg">
+    <h2 id="name">John Doe</h2>
+    <p id="email">john@example.com</p>
+    <p id="location">New York, USA</p>
+    <button onclick="getUser()">Generate User</button>
+  </div>
+
+  <script>
+    function getUser() {
+      fetch("https://randomuser.me/api/")
+        .then(response => response.json())
+        .then(data => {
+          const user = data.results[0];
+
+          document.getElementById("photo").src = user.picture.large;
+          document.getElementById("name").innerText =
+            user.name.first + " " + user.name.last;
+          document.getElementById("email").innerText = user.email;
+          document.getElementById("location").innerText =
+            user.location.city + ", " + user.location.country;
+        })
+        .catch(error => {
+          alert("Failed to fetch user");
+          console.log(error);
+        });
+    }
+  </script>
+
+</body>
+</html>
